@@ -1,4 +1,6 @@
+# ssh-keygen 用法
 
+## 生成密钥对
 运行以下命令创建密钥对:
 
 $ ssh-keygen -t dsa
