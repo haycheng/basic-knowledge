@@ -28,6 +28,7 @@ ssh haycheng@3.14.159.26
 ```
 ssh -p 1234 haycheng@3.14.159.26
 ```
+### 远程执行命令
 如果只想在远程主机上执行一次命令，则可以在ssh命令后面跟上想在远程主机上执行的命令，命令执行完后从远程主机退出，执行结果会回显在终端：
 ```
 ssh haycheng@3.14.159.26 pwd
@@ -38,6 +39,7 @@ haychengdeMacBook-Pro:~ haycheng$ ssh haycheng@3.14.159.26 pwd
 Enter passphrase for key '/Users/haycheng/.ssh/id_rsa':
 /home/haycheng
 ```
+如果ssh后面跟的是`bash`，则会进入一个bash的交互式命令环境，可以输入各种想在远程主机执行的命令。
 
 ## 第一次登录
 用户在第一次登录某个主机host时，会出现类似如下的提示：
