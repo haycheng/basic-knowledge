@@ -10,6 +10,14 @@ OpenSSH 的实现中，包含了如下几类工具：
 * 密钥管理：ssh-add, ssh-keysign, ssh-keyscan, ssh-keygen
 * 服务端相关：sshd, sftp-server, ssh-agent
 
+## ssh配置
+在/etc/ssh/目录下，有ssh_config 和 sshd_config 两个配置文件，分别用于ssh客户端和服务端的配置。
+比如，若想改变登录的提示语，则在sshd_config配置文件中找到 Banner 所在的行，删除左边的注释符 # ，并将希望显示的内容所在文件地址跟着Banner后面：
+```
+Banner /etc/ssh/prompt_text_file
+```
+配置文件 /etc/ssh/sshd_config 中还可以找到端口号、空闲超时时间等配置项。
+
 
 **参考资料：**
 1. [SSH原理与运用（一）：远程登录](http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html)
