@@ -3,15 +3,6 @@
 ## 简介
 ssh-keygen 命令用于认证密钥的生成、管理与转换。
 
-## ssh配置
-在/etc/ssh/目录下，有ssh_config 和 sshd_config 两个配置文件，分别用于ssh客户端和服务端的配置。
-比如，若想改变登录的提示语，则在sshd_config配置文件中找到 Banner 所在的行，删除左边的注释符 # ，并将希望显示的内容所在文件地址跟着Banner后面：
-```
-Banner /etc/ssh/prompt_text_file
-```
-配置文件 /etc/ssh/sshd_config 中还可以找到端口号、空闲超时时间等配置项。
-
-
 ## 常见用法
 
 ### 生成密钥对
