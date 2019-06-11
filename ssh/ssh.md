@@ -10,8 +10,10 @@ ssh的用法如下：
          [-O ctl_cmd] [-o option] [-p port] [-R  [bind_address:]port:host:hostport] [-S ctl_path]
          [-w local_tun[:remote_tun]] [user@]hostname [command]
 ```
-各选项的具体含义，可以参看man文档。这里介绍下基本的用法。
+各选项的具体含义，可以参看man文档。这里介绍下基本的常见用法。
 
+
+## 常见用法
 假设 haycheng 是主机 myhost.com（假定其IP为 3.14.159.26）上的一个用户，则可以通过如下命令远程登录主机：
 ```
 ssh haycheng@myhost.com
@@ -26,6 +28,17 @@ ssh haycheng@3.14.159.26
 ```
 ssh -p 1234 haycheng@3.14.159.26
 ```
+如果只想在远程主机上执行一次命令，则可以在ssh命令后面跟上想在远程主机上执行的命令，命令执行完后从远程主机退出，执行结果会回显在终端：
+```
+ssh haycheng@3.14.159.26 pwd
+```
+终端显示如下：
+```
+haychengdeMacBook-Pro:~ haycheng$ ssh haycheng@3.14.159.26 pwd
+Enter passphrase for key '/Users/haycheng/.ssh/id_rsa':
+/home/haycheng
+```
+
 ## 第一次登录
 用户在第一次登录某个主机host时，会出现类似如下的提示：
 ```
