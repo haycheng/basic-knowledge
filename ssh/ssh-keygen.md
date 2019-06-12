@@ -6,11 +6,13 @@ ssh-keygen 命令用于认证密钥的生成、管理与转换。
 ## 常见用法
 
 ### 生成密钥对
--t 选项用于在创建密钥对时指定密钥类型，可用类型包括
+`-t dsa | ecdsa | ed25519 | rsa` 选项用于在创建密钥对时指定密钥类型，可用类型包括
 - dsa
 - ecdsa
 - ed25519
 - rsa: 
+
+`-C comment` 用于在生成的密钥中添加注释/描述，该注释可以在公钥文件的末尾看到。如果没有显式添加注释，则默认注释的形式为“当前用户名@本地主机名”。
 
 例如，
 ```
@@ -41,7 +43,8 @@ The key's randomart image is:
 |B       ...      |
 +----[SHA256]-----+
 ```
-最后会生成密钥并会显示一张该密钥对应的随机图.
+从显示的文本中可以看到，ssh-keygen生成了一个rsa类型的密钥对，其中私钥存储在`/Users/haycheng/.ssh/id_rsa_0`文件中，公钥存储在`/Users/haycheng/.ssh/id_rsa_0.pub`文件中。
+最后会生成密钥并会显示一张该密钥对应的随机图。
 
 ### 搜索主机密钥
 `ssh-keygen -F hostname` 用于在 ~/.ssh/known_hosts 文件中寻找主机 hostname 对应的密钥。
