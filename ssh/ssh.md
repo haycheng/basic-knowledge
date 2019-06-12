@@ -41,24 +41,6 @@ Enter passphrase for key '/Users/haycheng/.ssh/id_rsa':
 ```
 如果ssh后面跟的是`bash`，则会进入一个bash的交互式命令环境，可以输入各种想在远程主机执行的命令。
 
-## 第一次登录
-用户在第一次登录某个主机host时，会出现类似如下的提示：
-```
-$ ssh haycheng@3.14.159.26
-The authenticity of host '3.14.159.26 (3.14.159.26)' can't be established.
-RSA key fingerprint is SHA256:rgUYhGbCjHk+Qv2EbzOFBlJmKWy2vu3EPTMy5kZHHA4.
-Are you sure you want to continue connecting (yes/no)?
-```
-这是因为第一次登录该主机，无法确认主机的真实性、可靠性。
-接着打印出了该主机的RSA公钥的指纹（用SHA256算法计算出了公钥的摘要，便于比对），通过该指纹来验证主机是否真实可靠（跟该主机在网站上贴出的公钥指纹进行核对）。
-如果能够确认主机是可靠的，则输入yes进行连接，会显示如下信息：
-```
-Warning: Permanently added '100.69.41.125' (RSA) to the list of known hosts.
-```
-表明将该主机加入了用户的已知主机列表（~/.ssh/known_hosts）中。下次连接该主机时，ssh发现主机的公钥已经保存在known_hosts中了，就不会显示确认连接的信息，直接提示输入密码进行连接[^1]。
-
-每个SSH用户都有自己的known_hosts文件，此外系统也有一个这样的文件，通常是/etc/ssh/ssh_known_hosts，保存一些对所有用户都可信赖的远程主机的公钥。
-
 ## 两种登录方式
 通过ssh登录远程主机时，有两种方式可以选择：密码登录和公钥登录。
 
@@ -74,9 +56,29 @@ ssh中使用密码登录时，数据交换的过程是这样的：
 
 这个风险应该怎么解决呢？因为不像https协议，SSH协议的公钥是没有证书中心（CA）公证的，也就是说都是自己签发的。没有了公证人，那么就只能靠用户自己去辨别公钥的真伪了。用户可以在要登录的站点官网上查看站点的公钥（可能是公钥的摘要），只要远程主机发送回来的公钥与官网上的一致（ssh客户端会将收到的远程主机的公钥打印出来，并询问用户该公钥是否可信），就可以放心地与该主机进行连接了（即使发送该可信公钥的是个骗子，他获取了登录密码的密文也没用，因为骗子手里不可能有该可信公钥对应的私钥，也就无法解密获得用户的登录密码）。
 
-可以设想，如果攻击者插在用户与远程主机之间，用伪造的公钥，获取用户的登录密码。再用这个密码登录远程主机，那么SSH的安全机制就荡然无存了。这种风险就是著名的"中间人攻击"（Man-in-the-middle attack）。
+### 第一次登录
+用户在第一次登录某个主机host时，会出现类似如下的提示：
+```
+$ ssh haycheng@3.14.159.26
+The authenticity of host '3.14.159.26 (3.14.159.26)' can't be established.
+RSA key fingerprint is SHA256:rgUYhGbCjHk+Qv2EbzOFBlJmKWy2vu3EPTMy5kZHHA4.
+Are you sure you want to continue connecting (yes/no)?
+```
+这是因为第一次登录该主机，无法确认主机的真实性、可靠性。
+接着打印出了该主机RSA公钥的指纹（用SHA256算法计算出了公钥的摘要，便于比对），通过该指纹来验证主机是否真实可靠（跟该主机在网站上贴出的公钥指纹进行核对）。
+如果能够确认主机是可靠的，则输入yes进行连接后，会显示如下信息：
+```
+Warning: Permanently added '100.69.41.125' (RSA) to the list of known hosts.
+```
+表明将该主机加入了用户的已知主机列表（~/.ssh/known_hosts）中。下次连接该主机时，ssh发现主机的公钥已经保存在known_hosts中了，就不会显示确认连接的信息，直接提示输入密码进行连接。
+
+除了每个SSH用户有自己单独的known_hosts文件（~/.ssh/known_hosts）外，系统也可以有全局的known_hosts文件（如果存在，通常是/etc/ssh/ssh_known_hosts），存放对所有用户都可信的远程主机公钥。
 
 ### 公钥登录
+用密码登录时，需要每次都输入密码，而SSH的公钥登录，不必密码即可登录，相对来说要便捷很多。
+
+所谓"公钥登录"，原理很简单，就是用户将自己的公钥储存在远程主机上。登录的时候，远程主机会向用户发送一段随机字符串，用户用自己的私钥加密后，再发给远程主机。远程主机用事先储存的公钥进行解密，如果成功，就证明用户是可信的，直接允许登录shell，不再要求输入密码。
+
 
 
 ~/.ssh/config中有个配置项`StrictHostKeyChecking`，取值可为 yes 或 no，表示采用或不采用严格的主机key检测。
