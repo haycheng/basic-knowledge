@@ -43,10 +43,11 @@ The key's randomart image is:
 |B       ...      |
 +----[SHA256]-----+
 ```
-从显示的文本中可以看到，ssh-keygen生成了一个rsa类型的密钥对，其中私钥存储在`/Users/haycheng/.ssh/id_rsa_0`文件中，公钥存储在`/Users/haycheng/.ssh/id_rsa_0.pub`文件中。
+从显示的文本中可以看到，ssh-keygen生成了一个rsa类型的密钥对，其中私钥存储在`/Users/haycheng/.ssh/id_rsa_0`文件中，公钥存储在`/Users/haycheng/.ssh/id_rsa_0.pub`文件中（以.pub为后缀）。公钥可以给任何人读取，但私钥只有拥有者才有读取权限，其他人都不应该有权限读。
+
 最后会生成密钥并会显示一张该密钥对应的随机图。
 
-### 更改私钥口令
+### 设置/更改私钥口令
 如果想更改为私钥文件设置的口令，可以用`-p`选项。为了指定更改哪个私钥文件，在`-f`后面跟上需要更改口令的私钥文件名。如果不用`-f`指定，则需在后续的交互中指定私钥文件。
 ```
 $ ssh-keygen -f ~/.ssh/id_rsa_0 -p
