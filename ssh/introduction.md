@@ -1,10 +1,16 @@
-# SSH (Secure SHell) 介绍
+# SSH (Secure SHell)
 
-## 
-SSH 是 Secure Shell 的缩写，意为安全外壳协议。它是位于应用层的一种加密的网络传输协议（通过对传输数据进行加密来保证security），用于为远程登录和其他网络服务提供安全的通信环境。虽然任何网络服务都可以通过SSH实现安全传输，但最常见的用途是远程登录系统，人们通常利用SSH来传输命令行界面和远程执行命令（[SSH - 维基百科](https://zh.wikipedia.org/zh-hans/Secure_Shell)）。
+## 背景
+传统的网络服务程序，如ftp、pop和telnet等，在网络上是用明文传送口令和数据，别有用心的人就可以截获这些口令和数据，容易受到“中间人”（man-in-the-middle）的攻击。所谓“中间人”的攻击，是指“中间人”冒充真正的服务器接收你传给服务器的数据，然后再冒充你把数据传给真正的服务器。服务器和你之间的数据传送被“中间人”一转手做了手脚之后，就会出现很严重的问题。
 
-SSH只是一种协议，存在多种实现，既有商业实现，也有开源实现。OpenSSH就是SSH协议的一个著名开源实现，应用非常广泛，很多操作系统和产品（详细名单见[这里](https://www.openssh.com/users.html)）都使用了该软件，因此学会使用OpenSSH工具套件很重要。
+因此，需要用一种安全的通信方式，把所有传输的数据进行加密，防止"中间人"这种攻击方式，SSH就是为了实现这种安全的数据传输而出现的。
 
+## 功能
+SSH 是 Secure Shell 的缩写，意为安全外壳协议。它是位于应用层的一种加密的网络传输协议（通过对传输数据进行加密来保证数据安全），用于为远程登录和其他网络服务提供安全的通信环境。使用SSH的一个额外的好处是传输的数据是经过压缩的，所以可以加快传输的速度。虽然任何网络服务都可以通过SSH实现安全传输，但最常见的用途是远程登录系统，人们通常利用SSH来传输命令行界面和远程执行命令。
+
+SSH协议最初是在1995年，由芬兰学者Tatu Ylonen设计的，现已成为互联网安全的一个基本解决方案，目前已经成为类Unix系统的标配。几乎所有Unix平台，包括HP-UX、Linux、AIX、Solaris、Digital UNIX、Irix等，都可运行SSH。SSH只是一种协议，存在多种实现，既有商业实现，也有开源实现。[OpenSSH](https://www.openssh.com/)就是SSH协议的一个著名开源实现，应用非常广泛，很多操作系统和产品（详细名单见[这里](https://www.openssh.com/users.html)）都使用了该软件，因此学会使用OpenSSH工具套件很重要。
+
+## 工具套件
 OpenSSH 的实现中，包含了如下几类工具：
 * 远程操作：ssh, scp, sftp
 * 密钥管理：ssh-add, ssh-keysign, ssh-keyscan, ssh-keygen
@@ -20,6 +26,8 @@ Banner /etc/ssh/prompt_text_file
 
 
 **参考资料：**
+1. [SSH - 维基百科](https://zh.wikipedia.org/zh-hans/Secure_Shell)）
+1. [ssh（安全外壳协议）- 百度百科](https://baike.baidu.com/item/SSH/10407)
 1. [SSH原理与运用（一）：远程登录](http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html)
-2. [OpenSSH](https://www.openssh.com/)
+1. [OpenSSH](https://www.openssh.com/)
 
