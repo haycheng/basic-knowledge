@@ -28,6 +28,13 @@ ssh haycheng@3.14.159.26
 ```
 ssh -p 1234 haycheng@3.14.159.26
 ```
+`-i identity_file`选项指明用哪个私钥进行登录。如果不指明的话，不同认证类型使用的默认密钥文件为：
+- dsa: ~/.ssh/id_dsa
+- ecdsa: ~/.ssh/id_ecdsa
+- ed25519: ~/.ssh/id_ed25519
+- rsa: ~/.ssh/id_rsa
+也可以在ssh的配置文件中指明主机名与私钥文件的对应关系。
+
 ### 远程执行命令
 如果只想在远程主机上执行一次命令，则可以在ssh命令后面跟上想在远程主机上执行的命令，命令执行完后从远程主机退出，执行结果会回显在终端：
 ```
@@ -68,7 +75,7 @@ Are you sure you want to continue connecting (yes/no)?
 接着打印出了该主机RSA公钥的指纹（用SHA256算法计算出了公钥的摘要，便于比对），通过该指纹来验证主机是否真实可靠（跟该主机在网站上贴出的公钥指纹进行核对）。
 如果能够确认主机是可靠的，则输入yes进行连接后，会显示如下信息：
 ```
-Warning: Permanently added '100.69.41.125' (RSA) to the list of known hosts.
+Warning: Permanently added '3.14.159.26' (RSA) to the list of known hosts.
 ```
 表明将该主机加入了用户的已知主机列表（~/.ssh/known_hosts）中。下次连接该主机时，ssh发现主机的公钥已经保存在known_hosts中了，就不会显示确认连接的信息，直接提示输入密码进行连接。
 
@@ -77,9 +84,21 @@ Warning: Permanently added '100.69.41.125' (RSA) to the list of known hosts.
 ### 公钥登录
 用密码登录时，需要每次都输入密码，而SSH的公钥登录，不必密码即可登录，相对来说要便捷很多。
 
-所谓"公钥登录"，原理很简单，就是用户将自己的公钥储存在远程主机上。登录的时候，远程主机会向用户发送一段随机字符串，用户用自己的私钥加密后，再发给远程主机。远程主机用事先储存的公钥进行解密，如果成功，就证明用户是可信的，直接允许登录shell，不再要求输入密码。
+所谓"公钥登录"，原理很简单，就是用户将自己的公钥储存在远程主机上。用户登录的时候会带上自己的公钥，远程主机从该用户在远程主机的家目录下~/.ssh/authorized_keys查找是否存在该公钥。如果存在的话，则会向用户发送一段随机字符串，用户用自己的私钥加密后，再发给远程主机。远程主机用事先储存的公钥进行解密，如果成功，就证明用户是可信的，直接允许登录shell，不再要求输入密码。
 
+公钥登录的方式，需要用户事先创建好一个密钥对（用ssh-keygen生成密钥对的方法见[这里]()）。然后，用 ssh-copy-id 将指定的公钥发送给远程主机，这样下次就可以通过公钥登录了。
+```
+$ ssh-copy-id -i ~/.ssh/id_rsa_0 joe.clx@3.14.159.26
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/Users/haycheng/.ssh/id_rsa_0.pub"
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+joe.clx@3.14.159.26's password:
 
+Number of key(s) added:        1
+
+Now try logging into the machine, with:   "ssh 'haycheng@3.14.159.26'"
+and check to make sure that only the key(s) you wanted were added.
+```
 
 ~/.ssh/config中有个配置项`StrictHostKeyChecking`，取值可为 yes 或 no，表示采用或不采用严格的主机key检测。
 当出现
