@@ -77,17 +77,20 @@ Are you sure you want to continue connecting (yes/no)?
 ```
 Warning: Permanently added '3.14.159.26' (RSA) to the list of known hosts.
 ```
-表明将该主机加入了用户的已知主机列表（~/.ssh/known_hosts）中。下次连接该主机时，ssh发现主机的公钥已经保存在known_hosts中了，就不会显示确认连接的信息，直接提示输入密码进行连接。
+表明将该主机加入了用户的已知主机列表（`~/.ssh/known_hosts`）中。下次连接该主机时，ssh发现主机的公钥已经保存在known_hosts中了，就不会显示确认连接的信息，直接提示输入密码进行连接。
 
-除了每个SSH用户有自己单独的known_hosts文件（~/.ssh/known_hosts）外，系统也可以有全局的known_hosts文件（如果存在，通常是/etc/ssh/ssh_known_hosts），存放对所有用户都可信的远程主机公钥。
+除了每个SSH用户有自己单独的known_hosts文件外，系统也可以有全局的known_hosts文件（如果存在，通常是`/etc/ssh/ssh_known_hosts`），存放对所有用户都可信的远程主机公钥。
+
+**待验证**如果有多个Linux系统使用同一IP，而这些系统的公钥是不同的。在登录一次后，本地就会把IP及其对应的公钥记录在known_hsots文件中，那么当远程主机切换到另一个系统后，远程主机的公钥变了，这时再次用ssh登录该IP时，就会出现公钥不一致的警告（`WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!`），这时要么手动删除known_hsots里面对应该IP的内容，要么修改配置文件“~/.ssh/config”，加上`StrictHostKeyChecking no`和`UserKnownHostsFile /dev/null`两项配置，然后重启服务（这种方法降低了安全性）。
 
 ### 公钥登录
 用密码登录时，需要每次都输入密码，而SSH的公钥登录，不必密码即可登录，相对来说要便捷很多。
 
-所谓"公钥登录"，原理很简单，就是用户将自己的公钥储存在远程主机上。用户登录的时候会带上自己的公钥，远程主机从该用户在远程主机的家目录下~/.ssh/authorized_keys查找是否存在该公钥。如果存在的话，则会向用户发送一段随机字符串，用户用自己的私钥加密后，再发给远程主机。远程主机用事先储存的公钥进行解密，如果成功，就证明用户是可信的，直接允许登录shell，不再要求输入密码。
+所谓"公钥登录"，原理很简单，就是用户将自己的公钥储存在远程主机上。用户登录的时候会带上自己的公钥，远程主机从该用户在远程主机的家目录下`~/.ssh/authorized_keys`查找是否存在该公钥。如果存在的话，则会向用户发送一段随机字符串，用户用自己的私钥加密后，再发给远程主机。远程主机用事先储存的公钥进行解密，如果成功，就证明用户是可信的，直接允许登录shell，不再要求输入密码。
 
-公钥登录的方式，需要用户事先创建好一个密钥对（用ssh-keygen生成密钥对的方法见[这里]()）。然后，用 ssh-copy-id 将指定的公钥发送给远程主机，这样下次就可以通过公钥登录了。
-ssh-copy-id 是ssh套件提供的一个工具，用来将本地的公钥传送给远程主机，远程主机将接收到的公钥上保存在用户家目录的`~/.ssh/authorized_keys`文件中，下次就可以通过检查authorized_keys文件来确定能否用公钥登录了。ssh-copy-id的基本用法是通过 -i 选项指定要传送的公钥文件（以.pub结尾。即使文件没有以.pub结尾，工具也会查找加上.pub之后的文件），然后与ssh用法类似，需要指明远程主机与登录的用户名，即`ssh-copy-id -i identity_file user@]hostname`。其他更多用法请查看man文档。
+公钥登录的方式，需要用户事先创建好一个密钥对（用`ssh-keygen`生成密钥对的方法见[这里]()）。然后，用`ssh-copy-id`将指定的公钥发送给远程主机，这样下次就可以通过公钥登录了。
+
+`ssh-copy-id`是ssh套件提供的一个工具，用来将本地的公钥传送给远程主机，远程主机将接收到的公钥上保存在用户家目录的`~/.ssh/authorized_keys`文件中，下次就可以通过检查`authorized_keys`文件来确定能否用公钥登录了。`ssh-copy-id`的基本用法是通过`-i`选项指定要传送的公钥文件（以.pub结尾。即使文件没有以.pub结尾，工具也会查找加上.pub之后的文件），然后与`ssh`命令的用法类似，需要指明远程主机与登录的用户名，即`ssh-copy-id -i identity_file user@]hostname`。其他更多用法请查看man文档。
 ```
 $ ssh-copy-id -i ~/.ssh/id_rsa_0 joe.clx@3.14.159.26
 /usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/Users/haycheng/.ssh/id_rsa_0.pub"
@@ -101,20 +104,24 @@ Now try logging into the machine, with:   "ssh 'haycheng@3.14.159.26'"
 and check to make sure that only the key(s) you wanted were added.
 ```
 
-如果在将公钥发送给远程主机后，用户仍然无法利用公钥登录，则
-~/.ssh/config中有个配置项`StrictHostKeyChecking`，取值可为 yes 或 no，表示采用或不采用严格的主机key检测。
-当出现
-有以下两个解决方案：
-1. 手动删除修改known_hsots里面的内容；
-2. 修改配置文件“~/.ssh/config”，加上这两行，重启服务器。
-   StrictHostKeyChecking no
-   UserKnownHostsFile /dev/null
+**待验证**如果在将公钥发送给远程主机后，用户仍然无法利用公钥登录，则需要更改远程主机sshd进程的配置。sshd进程的配置文件位置是`/etc/ssh/sshd_config`，检查是否配置如下：
+```
+　　RSAAuthentication yes
+　　PubkeyAuthentication yes
+　　AuthorizedKeysFile .ssh/authorized_keys
+```
+其中，RSAAuthentication 用来设置是否开启RSA密钥验证，只针对SSH1；PubkeyAuthentication 用来设置是否开启公钥验证，如果使用公钥验证的方式登录时，则设置为yes；AuthorizedKeysFile 用来设置公钥验证文件的路径，与PubkeyAuthentication配合使用，默认值是".ssh/authorized_keys"。
 
-优缺点：
-1. 需要每次手动删除文件内容，一些自动化脚本的无法运行（在SSH登陆时失败），但是安全性高；
-2. SSH登陆时会忽略known_hsots的访问，但是安全性低；
---------------------- 
-作者：yasaken 
-来源：CSDN 
-原文：https://blog.csdn.net/yasaken/article/details/7348441 
-版权声明：本文为博主原创文章，转载请附上博文链接！
+更改 sshd_config 后，需要重启sshd服务才能生效：
+```
+　　// ubuntu系统
+　　service ssh restart
+
+　　// debian系统
+　　/etc/init.d/ssh restart
+```
+
+**参考文档**
+1. [SSH原理与运用（一）：远程登录](http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html)
+1. [ssh登陆之忽略known_hosts文件](https://blog.csdn.net/yasaken/article/details/7348441)
+
