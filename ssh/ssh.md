@@ -120,9 +120,29 @@ and check to make sure that only the key(s) you wanted were added.
 　　// debian系统
 　　/etc/init.d/ssh restart
 ```
+## 使用非默认的密钥登录
+在用ssh登录远程主机时，不指定密钥的话，ssh会使用默认的密钥登录。例如对于rsa，则默认使用的密钥为~/.ssh/id_rsa。
+如果想使用非默认的密钥登录远程，对于OpenSSH，需要在`~/.ssh/config`文件中进行配置。可以在该文件中，为不同的远程站点，配置不同的密钥。比如，
+```
+# GitLab.com
+Host gitlab.com
+RSAAuthentication yes
+Preferredauthentications publickey
+IdentityFile ~/.ssh/gitlab_com_rsa
+User mygitlabusername
+
+# Private GitLab instance
+Host gitlab.company.com
+Preferredauthentications publickey
+IdentityFile ~/.ssh/example_com_rsa
+```
+在对 gitlab.com 站点的配置中，RSAAuthentication 配置项表示是否允许pure RSA authentication，且只对SSH1版本起作用。默认是 yes，所以可以不配置。
+
+在登录远程主机时，如果ssh命令中没有指定用户名，OpenSSH默认会使用本地主机的用户名。如果本地主机与远程主机的用户不同的话，就可以通过 User 配置项来设置登录不同远程主机所使用的用户名。
 
 **参考文档**
 1. [SSH原理与运用（一）：远程登录](http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html)
 1. [ssh登陆之忽略known_hosts文件](https://blog.csdn.net/yasaken/article/details/7348441)
 1. [sshd_config(5) - Linux man page](https://linux.die.net/man/5/sshd_config)
 1. [SSH远程登录配置文件sshd_config详解](https://blog.csdn.net/Field_Yang/article/details/51568861)
+1. [GitLab and SSH keys](https://gitlab.com/help/ssh/README.md)
