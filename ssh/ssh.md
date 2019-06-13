@@ -81,7 +81,7 @@ Warning: Permanently added '3.14.159.26' (RSA) to the list of known hosts.
 
 除了每个SSH用户有自己单独的known_hosts文件外，系统也可以有全局的known_hosts文件（如果存在，通常是`/etc/ssh/ssh_known_hosts`），存放对所有用户都可信的远程主机公钥。
 
-**待验证**如果有多个Linux系统使用同一IP，而这些系统的公钥是不同的。在登录一次后，本地就会把IP及其对应的公钥记录在known_hsots文件中，那么当远程主机切换到另一个系统后，远程主机的公钥变了，这时再次用ssh登录该IP时，就会出现公钥不一致的警告（`WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!`），这时要么手动删除known_hsots里面对应该IP的内容，要么修改配置文件“~/.ssh/config”，加上`StrictHostKeyChecking no`和`UserKnownHostsFile /dev/null`两项配置，然后重启服务（这种方法降低了安全性）。
+**(待验证)**如果有多个Linux系统使用同一IP，而这些系统的公钥是不同的。在登录一次后，本地就会把IP及其对应的公钥记录在known_hsots文件中，那么当远程主机切换到另一个系统后，远程主机的公钥变了，这时再次用ssh登录该IP时，就会出现公钥不一致的警告（`WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!`），这时要么手动删除known_hsots里面对应该IP的内容，要么修改配置文件“~/.ssh/config”，加上`StrictHostKeyChecking no`和`UserKnownHostsFile /dev/null`两项配置，然后重启服务（这种方法降低了安全性）。
 
 ### 公钥登录
 用密码登录时，需要每次都输入密码，而SSH的公钥登录，不必密码即可登录，相对来说要便捷很多。
@@ -104,7 +104,7 @@ Now try logging into the machine, with:   "ssh 'haycheng@3.14.159.26'"
 and check to make sure that only the key(s) you wanted were added.
 ```
 
-**待验证**如果在将公钥发送给远程主机后，用户仍然无法利用公钥登录，则需要更改远程主机sshd进程的配置。sshd进程的配置文件位置是`/etc/ssh/sshd_config`，检查是否配置如下：
+**(待验证)**如果在将公钥发送给远程主机后，用户仍然无法利用公钥登录，则需要更改远程主机sshd进程的配置。sshd进程的配置文件位置是`/etc/ssh/sshd_config`，检查是否配置如下：
 ```
 　　RSAAuthentication yes
 　　PubkeyAuthentication yes
@@ -124,4 +124,5 @@ and check to make sure that only the key(s) you wanted were added.
 **参考文档**
 1. [SSH原理与运用（一）：远程登录](http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html)
 1. [ssh登陆之忽略known_hosts文件](https://blog.csdn.net/yasaken/article/details/7348441)
-
+1. [sshd_config(5) - Linux man page](https://linux.die.net/man/5/sshd_config)
+1. [SSH远程登录配置文件sshd_config详解](https://blog.csdn.net/Field_Yang/article/details/51568861)
