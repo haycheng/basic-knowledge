@@ -5,8 +5,12 @@
 
 一般来说，同步与阻塞常一起出现，而异步与非阻塞常一起出现。
 
+BIO：Blocking IO，即阻塞IO。
+NIO：有两种含义。一是 Non-blocking IO，即非阻塞IO；另一种是 New IO，是Java 1.4 开始引入的一种新的IO方式。
+Java 的 New IO 是面向块的IO，而Java 1.4之前的IO是面向流的。New IO只支持阻塞式调用。
+AIO：Asynchronized IO，即异步IO。
 
 
 **参考文档**
-1. [关于2的补码](http://www.ruanyifeng.com/blog/2009/08/twos_complement.html)
+1. [几种IO的比较](https://github.com/hollischuang/toBeTopJavaer/blob/master/basics/java-basic/bio-vs-nio-vs-aio.md)
 
