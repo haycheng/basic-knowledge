@@ -9,7 +9,6 @@
 
 ## 几种IO缩写
 - BIO：Blocking IO，即阻塞IO。在Java中，BIO的实现位于java.io包下。
-
 - NIO：有两种含义。一是 Non-blocking IO，即非阻塞IO；另一种是 New IO，是Java 1.4 开始引入的一种新的IO方式，在java.nio包下。Java 的 New IO 是面向块的IO，而Java 1.4之前的IO是面向流的。New IO只支持阻塞式调用。
 
 - AIO：Asynchronized IO，即异步IO。
@@ -18,6 +17,12 @@
 ### 阻塞IO
 
 ### 非阻塞IO
+
+### 多路复用IO
+
+### 信号驱动IO
+
+### 异步IO
 
 **参考文档**
 1. [几种IO的比较](https://github.com/hollischuang/toBeTopJavaer/blob/master/basics/java-basic/bio-vs-nio-vs-aio.md)
