@@ -30,7 +30,7 @@ Banner /etc/ssh/prompt_text_file
 
 
 **参考资料：**
-1. [SSH - 维基百科](https://zh.wikipedia.org/zh-hans/Secure_Shell)）
+1. [SSH - 维基百科](https://zh.wikipedia.org/zh-hans/Secure_Shell)
 1. [ssh（安全外壳协议）- 百度百科](https://baike.baidu.com/item/SSH/10407)
 1. [SSH原理与运用（一）：远程登录](http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html)
 1. [OpenSSH](https://www.openssh.com/)
