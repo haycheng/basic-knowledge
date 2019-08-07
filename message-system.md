@@ -25,7 +25,7 @@ Kafka中的消息模型，类似于传统的主题模型，但其扩展了消费
 - 事务消息的支持
 - 易于排错
 
-## 系统架构
+## 消息系统的架构
 消息系统由服务端和客户端组成。
 
 服务端包括存储、管理消息的Broker服务器，以及进行集群管理的服务器，後者依不同的实现而有所不同，如Kafka中是ZooKeeper，而RocketMQ中自建了称为NameServer的系统。
@@ -43,6 +43,11 @@ Kafka中的消息模型，类似于传统的主题模型，但其扩展了消费
   - 将唯一字段作为key保存在持久化缓存中：与保存在数据库中类似，根据缓存中是否存在该key，确定消息是否被重复处理。
   为了避免保存的key过多造成存储的浪费，可以根据消息的有效期（消息在Broker端一般不会永久保存下去），在确定消息已不会再次发送至消费者端後，定时地去清除数据库中保存的key，或者给缓存中的key设置有效期。
 
+## 相关名词
+- MOM：Message-Oriented Middleware，面向消息的中间件，即消息中间件，它实现了一整套消息系统的功能，如Kafka、RocketMQ。
+- JMS：Java Messaging Service，Java消息服务，是Java制定的消息服务的标准，各产商可以遵循该标准去实现及使用消息系统，从而降低沟通成本。
 
 **参考资料：**
-* [Introduction to Messaging Systems](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessagingComponentsIntro.html)
+1. [Introduction to Messaging Systems](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessagingComponentsIntro.html)
+1. [Messaging Systems: An Introduction - Oracle Docs](https://docs.oracle.com/cd/E26576_01/doc.312/e24949/messaging-systems-introduction.htm#GMTOV00025)
+
