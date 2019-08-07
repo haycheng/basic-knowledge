@@ -32,6 +32,10 @@ Kafka中的消息模型，类似于传统的主题模型，但其扩展了消费
 
 客户端则包括主要用于向消息系统提交其产生的消息的Producer，以及主要用于从消息系统获取并消费消息的Consumer。
 
+## 消息的存储
+Kafka和
+
+
 
 ## 关于重复消息的处理
 对于消息的重复消费问题，需要消费端做对应的幂等处理。所谓的幂等处理，就是处理多次与处理一次的效果是一样的。有两种方案可以对消息进行幂等处理：
@@ -45,7 +49,7 @@ Kafka中的消息模型，类似于传统的主题模型，但其扩展了消费
 
 ## 相关名词
 - MOM：Message-Oriented Middleware，面向消息的中间件，即消息中间件，它实现了一整套消息系统的功能，如Kafka、RocketMQ。
-- JMS：Java Messaging Service，Java消息服务，是Java制定的消息服务的标准，各产商可以遵循该标准去实现及使用消息系统，从而降低沟通成本。
+- JMS：Java Messaging Service，Java消息服务，是Java制定的消息服务的规范，各产商可以遵循该规范去实现及使用消息系统，从而降低沟通成本。
 
 **参考资料：**
 1. [Introduction to Messaging Systems](https://www.enterpriseintegrationpatterns.com/patterns/messaging/MessagingComponentsIntro.html)
