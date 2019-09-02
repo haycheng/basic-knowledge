@@ -51,33 +51,34 @@ Unicode的字符编码称为`UTF`(Unicode Transformation Format，直译为Unico
 
 **UTF-32**编码方式比较简单，直接用4个字节来表示每个Unicode字符的码位。4个字节共有32 bit，一共有2^32=4294967296个不同取指，用来表示1114112个码位没有问题。
 
-**UTF-16**使用变长字节进行编码，对于码位在U+0000到U+FFFF的字符，用2个字节表示；码位在 U+10000到U+10FFFF之间的字符，需要用四个字节表示。
-**UTF-16**使用变长字节进行编码，对于码位在U+0000到U+FFFF的字符，用2个字节表示；
-
+**UTF-16**使用变长字节进行编码，对于码位在U+0000到U+FFFF的字符，用2个字节表示；码位在U+10000到U+10FFFF之间的字符，则用4个字节表示。
 同样，UTF-16 也有字节的顺序问题（大小端），所以就有UTF-16BE表示大端，UTF-16LE表示小端。
-————————————————
-版权声明：本文为CSDN博主「Hern（宋兆恒）」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
-原文链接：https://blog.csdn.net/qq_36761831/article/details/82291166
+
+#### 字节序
+计算机在存储器中排列字节有的方式有两种，分别是大端法（Big Endian, BE）和小端法（Little Endian, LE）。大端法就是将高位字节放到低地址处，小端法则相反。
+
+UTF-32和UTF-16根据字节排序方式的不同，其编码方式分为UTF-32BE、UTF-32LE 和 UTF-16BE、UTF-16LE。
+
+下面详细叙述UTF-8编码方式。
+
+## UTF-8
+UTF-8是一种变长字节编码方式，也就是编码每个字符所用字节数不同，码位小的使用的字节就少，码位大的使用的字节就多。根据每个字符的码位范围，UTF-8用1到4个字节来表示字符，具体的编码规则如下：
+UTF-8的编码规则：
+
+① 对于单字节的符号，字节的第一位设为0，后面的7位为这个符号的Unicode码，因此对于英文字母，UTF-8编码和ASCII码是相同的。 
+
+② 对于n字节的符号（n>1）,第一个字节的前n位都设为1，第n+1位设为0，后面字节的前两位一律设为10，剩下的没有提及的二进制位，全部为这个符号的Unicode码 。
+
+举个例子：比如说一个字符的Unicode编码是130，显然按照UTF-8的规则一个字节是表示不了它（因为如果是一个字节的话前面的一位必须是0），所以需要两个字节(n = 2)。
+
+根据规则，第一个字节的前 2 位都设为1，第3(2+1)位设为0，则第一个字节为：110X XXXX，后面字节的前两位一律设为10，后面只剩下一个字节，所以后面的字节为：10XX XXXX。所以它的格式为110XXXXX 10XXXXXX 。
 
 
-
-
-
-注意：转换成二进制后计算机存储的问题。计算机在存储器中排列字节有两种方式：大端法和小端法，大端法就是将高位字节放到底地址处，比如0x1234, 计算机用两个字节存储，一个是高位字节0x12,一个是低位字节0x34，它的存储方式为下：
-————————————————
-版权声明：本文为CSDN博主「Hern（宋兆恒）」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
-原文链接：https://blog.csdn.net/qq_36761831/article/details/82291166
-
-
-
-
-#### UTF-8
-UTF-8是一种变长的编码规则，它根据每个字符的码位范围，用1到6个字节来表示，具体编码规则如下：
 ```
-U+ 0000 ~ U+ 007F: 0XXXXXXX
-U+ 0080 ~ U+ 07FF: 110XXXXX 10XXXXXX
-U+ 0800 ~ U+ FFFF: 1110XXXX 10XXXXXX 10XXXXXX
-U+10000 ~ U+10FFFF: 11110XXX 10XXXXXX 10XXXXXX 10XXXXXX
+U+000000 ~ U+00007F: 0XXXXXXX
+U+000080 ~ U+0007FF: 110XXXXX 10XXXXXX
+U+000800 ~ U+00FFFF: 1110XXXX 10XXXXXX 10XXXXXX
+U+010000 ~ U+10FFFF: 11110XXX 10XXXXXX 10XXXXXX 10XXXXXX
 ```
 常用的汉字基本都是3个字节编码的，部分生僻的汉字以及表情符号等，则需4个字节编码。
 
@@ -94,8 +95,6 @@ U+10000 ~ U+10FFFF: 11110XXX 10XXXXXX 10XXXXXX 10XXXXXX
 
 >> 如汉字“中”的Unicode码位为U+4E2D（10进制值为215，2进制值为1001110_00101101）（下划线_是为了阅读方便加上的）。转换成UTF-8编码时，先将低6位101101单独取出，加上10前缀後为10101101，即16进制的0xAD；再将中间6位111000取出，加上前缀10後为10111000，即16进制的0xB8；最後剩余3位100，补足成4位0100，再加上前缀1110後为11100100，即16进制的0xE4。因此汉字“中”在UTF-8编码规则中为3个字节，最高字节为0xE4，中间字节为0xB8，最低字节为0xAD。
 
-#### 字节序
-字节序有两种，分别是“大端”（Big Endian, BE）和“小端”（Little Endian, LE）。
 
 ## 附记：关于UCS和Unicode
 国际标准化组织（ISO）和多语言软件制造商组成的`Unicode`联盟都曾独立地创立统一的标准字符集。ISO开发了通用字符集（Universal Character Set, UCS）`ISO 10646`（或称`ISO/IEC 10646`），`Unicode`联盟则开发了`Unicode`。
@@ -106,7 +105,8 @@ U+10000 ~ U+10FFFF: 11110XXX 10XXXXXX 10XXXXXX 10XXXXXX
 1. [Unicode Consortium](https://home.unicode.org/basic-info/overview/)
 1. [Unicode 和 UTF-8 有什么区别？——知乎](https://www.zhihu.com/question/23374078)
 1. [utf-8和Unicode的区别](https://www.cnblogs.com/dhsz/p/7737480.html)
-1. [Unicode与UTF-8的区别](https://blog.csdn.net/hezh1994/article/details/78899683)
+1. [Unicode与UTF-8的区别](https://blog.csdn.net/qq_36761831/article/details/82291166)
+1. [彻底弄懂 Unicode 编码](https://blog.csdn.net/hezh1994/article/details/78899683)
 1. [Unicode——百度百科](https://baike.baidu.com/item/Unicode/750500)
 1. [ISO/IEC 8859——百度百科](https://baike.baidu.com/item/ISO%2FIEC%208859/916777)
 
