@@ -86,5 +86,5 @@ U+10000 ~ U+10FFFF: 11110XXX 10XXXXXX 10XXXXXX 10XXXXXX
 1. [utf-8和Unicode的区别](https://www.cnblogs.com/dhsz/p/7737480.html)
 1. [Unicode与UTF-8的区别](https://blog.csdn.net/hezh1994/article/details/78899683)
 1. [Unicode——百度百科](https://baike.baidu.com/item/Unicode/750500)
-1. [ISO/IEC 8859——百度百科(https://baike.baidu.com/item/ISO%2FIEC%208859/916777)
+1. [ISO/IEC 8859——百度百科](https://baike.baidu.com/item/ISO%2FIEC%208859/916777)
 
