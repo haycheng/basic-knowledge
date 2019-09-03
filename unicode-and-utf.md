@@ -37,7 +37,7 @@
 ## Unicode字符集
 Unicode字符集为每个字符分配一个唯一的数字编号即码位，码位的范围从 0x000000 到 0x10FFFF。这些码位被划分成17个平面（Plane），每平面拥有65536个码位，故一共有65536 * 17 = 1114112个码位。`Unicode`目前只用了少数几个平面，收录了约15万个字符。
 
-0号平面（又称BMP，Basic Multilingual Plane）收录了最常用的字符，其码位范围为0x0000 ~ 0xFFFF，其中中日韩统一表意符号 (CJK Unified Ideographs)的码位范围为0x4E00 ~ 0x9FBF，其中的 0x4E00 ~ 0x9FA5为汉字。剩下的屏幕称为SMP（Secondary Multilingual Plane，辅助多语言平面），码位范围从 U+010000 到 U+10FFFF（数值0x10FFFF占用了21 bit）。
+0号平面（又称BMP，Basic Multilingual Plane，基本多语言平面，基本平面）收录了最常用的字符，其码位范围为0x0000 ~ 0xFFFF，其中中日韩统一表意符号 (CJK Unified Ideographs)的码位范围为0x4E00 ~ 0x9FBF，其中的 0x4E00 ~ 0x9FA5为汉字。剩下的屏幕称为SMP（Secondary Multilingual Plane，辅助多语言平面，辅助平面），码位范围从 U+010000 到 U+10FFFF（数值0x10FFFF占用了21 bit）。
 
 `Unicode`在表示一个字符时，通常以“`U+`”开头，後面跟着16进制的码位。如汉字“中”用`Unicode`表示为`U+4E2D`，其中16进制的4E2D的10进制值为20013，即20013这个码位在`Unicode`字符集中表示汉字“中”。
 
@@ -51,9 +51,12 @@ Unicode字符集为每个字符分配一个唯一的数字编号即码位，码�
 
 Unicode的字符编码称为`UTF`(Unicode Transformation Format，直译为Unicode字符集转换格式) ，目前主要有3套编码方式，分别为UTF-8、UTF-16、UTF-32，它们分别以单个字节（8 bit）、2个字节（16 bit）、4个字节（32 bit）为编码的基本单位。
 
+#### UTF-32与UTF-16
 **UTF-32**编码方式比较简单，直接用4个字节来表示每个Unicode字符的码位。4个字节共有32 bit，一共有2^32=4294967296个不同取指，用来表示1114112个码位没有问题。
 
-**UTF-16**使用变长字节进行编码，对于码位在U+0000到U+FFFF的字符，用2个字节表示；码位在U+10000到U+10FFFF之间的字符，则用4个字节表示。
+**UTF-16**使用变长字节进行编码：
+1. 对于码位在U+0000到U+FFFF的字符，用2个字节表示。
+1. 码位在U+10000到U+10FFFF之间的字符，则用4个字节表示。
 同样，UTF-16 也有字节的顺序问题（大小端），所以就有UTF-16BE表示大端，UTF-16LE表示小端。
 
 #### 字节序
