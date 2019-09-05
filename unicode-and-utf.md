@@ -147,4 +147,4 @@ UTF-8解码规则比较简单：
 1. [彻底弄懂 Unicode 编码](https://blog.csdn.net/hezh1994/article/details/78899683)
 1. [Unicode——百度百科](https://baike.baidu.com/item/Unicode/750500)
 1. [ISO/IEC 8859——百度百科](https://baike.baidu.com/item/ISO%2FIEC%208859/916777)
-
+1. [Unicode®字符百科](https://unicode-table.com/cn/)
