@@ -142,7 +142,8 @@ UTF-8解码规则比较简单：
 - [Unicode®字符百科](https://unicode-table.com/cn/)
 - [汉字字符集编码查询](https://www.qqxiuzi.cn/bianma/zifuji.php)
 
-#### 参考文档：
+
+### 参考文档
 1. [字符集和字符编码的区别](https://www.cnblogs.com/xdyixia/p/9114145.html)
 1. [字符集和字符编码（Charset & Encoding）](https://www.cnblogs.com/skynet/archive/2011/05/03/2035105.html)
 1. [Unicode Consortium](https://home.unicode.org/basic-info/overview/)
