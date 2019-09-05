@@ -133,12 +133,18 @@ UTF-8解码规则比较简单：
 >> 如汉字“中”的Unicode码位为U+4E2D（10进制值为20013，2进制值为1001110_00101101）（加下划线是为了阅读方便）。转换成UTF-8编码时，先将低6位101101单独取出，加上10前缀後为10101101，即16进制的0xAD；再将中间6位111000取出，加上前缀10後为10111000，即16进制的0xB8；最後剩余3位100，补足成4位0100，再加上前缀1110後为11100100，即16进制的0xE4。因此汉字“中”在UTF-8编码规则中为3个字节，最高字节为0xE4，中间字节为0xB8，最低字节为0xAD。
 
 
-## 附记：关于UCS和Unicode
+## 附录
+#### 关于UCS和Unicode
 国际标准化组织（ISO）和多语言软件制造商组成的`Unicode`联盟都曾独立地创立统一的标准字符集。ISO开发了通用字符集（Universal Character Set, UCS）`ISO 10646`（或称`ISO/IEC 10646`），`Unicode`联盟则开发了`Unicode`。
 由于意识到不需要两个不兼容的字符集，两个组织便合并了双方的工作成果，并为创立一个单一编码表而协同工作。从Unicode 2.0开始，Unicode采用了与ISO 10646-1相同的字库和字码；ISO也承诺，ISO 10646将不会替超出U+10FFFF的UCS-4编码赋值，以使得两者保持一致。
 
+#### 字符集相关的网站
+- [Unicode®字符百科](https://unicode-table.com/cn/)
+- [汉字字符集编码查询](https://www.qqxiuzi.cn/bianma/zifuji.php)
+
 #### 参考文档：
 1. [字符集和字符编码的区别](https://www.cnblogs.com/xdyixia/p/9114145.html)
+1. [字符集和字符编码（Charset & Encoding）](https://www.cnblogs.com/skynet/archive/2011/05/03/2035105.html)
 1. [Unicode Consortium](https://home.unicode.org/basic-info/overview/)
 1. [Unicode 和 UTF-8 有什么区别？——知乎](https://www.zhihu.com/question/23374078)
 1. [utf-8和Unicode的区别](https://www.cnblogs.com/dhsz/p/7737480.html)
@@ -146,4 +152,5 @@ UTF-8解码规则比较简单：
 1. [彻底弄懂 Unicode 编码](https://blog.csdn.net/hezh1994/article/details/78899683)
 1. [Unicode——百度百科](https://baike.baidu.com/item/Unicode/750500)
 1. [ISO/IEC 8859——百度百科](https://baike.baidu.com/item/ISO%2FIEC%208859/916777)
-1. [Unicode®字符百科](https://unicode-table.com/cn/)
+1. [GB2312 编码](https://www.qqxiuzi.cn/zh/hanzi-gb2312-bianma.php)
+
