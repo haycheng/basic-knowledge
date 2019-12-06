@@ -1,2 +1,2 @@
-# basic-knowledge
-开发工程师需知的一些基础知识
+# programming-knowledge
+研发工程师需知的一些编程知识
