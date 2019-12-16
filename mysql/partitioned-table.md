@@ -8,9 +8,9 @@ MySQL中的分区表可以将一个表中的数据，在物理上分成多个表
 - 按某个字段的哈希值将其划到特定分区（HASH partitioning）
 - 按多个字段的取值将其划到特定分区（KEY partitioning）
 
-
+按某个字段分区后，若表中存在唯一健，则分区字段必须包含在唯一健中。
 
 ### 参考文档
 1. [Chapter 23 Partitioning](https://dev.mysql.com/doc/refman/8.0/en/partitioning.html)
-1. [MySQL · 最佳实践 · 分区表基本类型 ](http://mysql.taobao.org/monthly/2017/11/09/)
+1. [数据库内核月报 － MySQL · 最佳实践 · 分区表基本类型 ](http://mysql.taobao.org/monthly/2017/11/09/)
 
