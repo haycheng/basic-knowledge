@@ -16,7 +16,7 @@ MySQL中的分区表可以将一个表中的数据，在物理上分成多个表
 查看分区情况：
 
 ### 参考文档
-1. [Chapter 23 Partitioning](https://dev.mysql.com/doc/refman/8.0/en/partitioning.html)
+1. [MySQL 8.0 Reference Manual - Chapter 23 Partitioning](https://dev.mysql.com/doc/refman/8.0/en/partitioning.html)
 1. [数据库内核月报 － MySQL · 最佳实践 · 分区表基本类型](http://mysql.taobao.org/monthly/2017/11/09/)
 1. [简书 － mysql表分区详解](https://www.jianshu.com/p/1cdd3e3c5b3c)
 
