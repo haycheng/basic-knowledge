@@ -29,11 +29,12 @@ public void initBinder(WebDataBinder binder){
     binder.registerCustomEditor(Date.class,dateEditor);
 }
 ```
+@InitBinder有个参数，
 
 关于`PropertyEditor` bean 的作用域？
 
 ### `PropertyEditor` Bean 是如何发挥作用的？
 添加了`PropertyEditor` bean
 
-
+### @DateTimeFormat 注解
 
