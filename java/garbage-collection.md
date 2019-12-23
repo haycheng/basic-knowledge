@@ -51,10 +51,17 @@ A：Minor GC
 #### Q：什么触发 Full GC？
 A：Minor GC
 
+#### Q：复制算法与标记-整理算法都需要移动存活的对象，而且复制算法需要额外的内存来放置存活下来的对象，那为什么老年代要用标记-整理算法？
+A：复制算法在工作的时候没有独立的“mark”与“copy”阶段，而是合在一起做的，就叫scavenge（或evacuate、copy）。也就是说，每发现一个这次收集中尚未访问过的活对象就直接copy到新地方，同时设置forwarding pointer。这样的工作方式就需要多一份空间。
+
+标记-整理算法在工作的时候则需要依次进行mark与compact阶段，mark阶段用来发现并标记所有活的对象，然后compact阶段才移动对象来达到compact的目的。如果compact方式是sliding compaction，则在mark之后就可以按顺序一个个对象“滑动”到空间的某一侧。因为已经先遍历了整个空间里的对象图，知道所有的活对象了，所以移动的时候就可以在同一个空间内而不需要多一份空间。
+
+是空间换时间，而mark-compact则是时间换空间。
+
 ### 参考文档：
 1. [Garbage Collection in Java](https://plumbr.io/handbook/garbage-collection-in-java)
 1. [Java Garbage Collection Basics](https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html)
 1. [Major GC和Full GC的区别是什么？触发条件呢？](https://www.zhihu.com/question/41922036)
 1. [聊聊JVM（四）深入理解Major GC, Full GC, CMS](https://blog.csdn.net/ITer_ZC/article/details/41825395)
 1. [JVM参数MetaspaceSize的误解](https://www.jianshu.com/p/b448c21d2e71)
-
+1. [GC复制算法和标记-压缩算法的疑问](https://hllvm-group.iteye.com/group/topic/28594)
