@@ -46,10 +46,10 @@ A：Eden区没有足够的空间用于分配新的对象时，就会产生 Minor
 A：有，如 Serial 收集器的标记阶段。因为Eden区的对象绝大部分都会死掉，只有很少一部分需要复制到Survivor或Old区，所以其STW的时间很短，对应用的影响也很小（除非Eden中有大量的对象存活）。
 
 #### Q：什么触发 Major GC？
-A：Minor GC
+A：
 
 #### Q：什么触发 Full GC？
-A：Minor GC
+A：
 
 #### Q：复制算法与标记-整理算法都需要移动存活的对象，且复制算法需要额外的内存来放置存活下来的对象，那为什么HotSpot VM中新生代要用复制算法而不是标记-整理算法？
 A：**复制算法（copying collector，或者叫scavenger）在工作的时候没有独立的mark、copy这两个阶段，而是合在一起做的**，就叫scavenge（或evacuate，或者就叫copy）。也就是说，每发现一个这次收集中尚未访问过的活对象就直接copy到新地方，同时设置forwarding pointer。这样的工作方式就需要多一份空间。
