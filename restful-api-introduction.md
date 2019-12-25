@@ -14,7 +14,7 @@ RESTful一词中的REST，是Representational State Transfer的缩写，意思�
 
 因此，基于HTTP协议的RESTful API的设计中，URL仅用来指定某个资源，不包含动作，对资源的操作动作是通过HTTP起始行中指定的方法指定的。资源的表现形式，客户端通过Accept来说明可接受类型，服务器则通过Content-Type来具体说明返回的数据形式。
 
-比如，要查看用户ID为10000的余额信息，其表示方法不应该是`GET /getBalance?userId=10000`，而应该是类似于`GET /user/10000/balance`。如果用户10000要向用户10001转账99元的话，其表示方法不应该是`POST(或GET) /transferBalance?fromId=10000&toId=10001&amount=99`（或将参数放在POST请求的body中）或`POST /10001/transfer/99/to/10001`，而应该是`POST /transaction?fromId=10000&toId=10001&amount=99`（或将参数放在POST请求的body中），甚至是`POST /transaction/10000/99/10001`。
+比如，要查看用户ID为10000的余额信息，其表示方法不应该是`GET /getBalance?userId=10000`，而应该是类似于`GET /user/10000/balance`。如果用户10000要向用户10001转账99元的话，其表示方法不应该是`POST /transferBalance?fromId=10000&toId=10001&amount=99`（或将参数放在POST请求的body中）或`POST /10001/transfer/99/to/10001`，而应该是`POST /transaction?fromId=10000&toId=10001&amount=99`（或将参数放在POST请求的body中），甚至是`POST /transaction/10000/99/10001`。
 
 总之，RESTful API的 URL 中不能出现动词，只能有表示资源的名词，比如将上述的转账操作（transfer）当作一种资源（transaction）来进行。RESTful API的动作应该通过HTTP方法来指定。
 
