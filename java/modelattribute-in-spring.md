@@ -17,13 +17,30 @@ public class HelloWorldController {
     }
 }
 ```
+在例子中，首先系统会自动将HTTP请求中的数据，按数据的key与`User`类中的字段名之间的对应关系，将数据的value赋给作为入参的`User`实例（`User`需要有无参构造器）。然后，由于存在注解`@ModelAttribute`，系统会向model中添加一个属性，属性的key为`someUser`（如果不指定该值，则key默认为类名首字母小写，即`user`），value为入参的User实例。
 
-在上述代码中，首先系统会自动将HTTP请求中的数据，按数据的key与`User`类中的字段名之间的对应关系，将数据的value赋给作为入参的`User`实例。然后，由于存在注解`@ModelAttribute`，系统会向model中添加一个属性，属性的key为`someUser`（如果不指定该值，则key默认为类名首字母小写，即`user`），value为入参的User实例。
+此时方法如果没有标注`@SessionAttributes("user")`，那么scope为request，如果标注了则scope为session。
 
-此时如果方法体没有标注`@SessionAttributes("user")`，那么scope为request，如果标注了，那么scope为session。
+## 在方法返回值上使用`@ModelAttribute`
+```
+@Controller
+public class HelloWorldController {
 
-## 在方法返回参数上使用`@ModelAttribute`
+    @Autowired
+    private AccountManager accountManager;
+    
+    public @ModelAttribute(name = "user") Account addAccount(@RequestParam String uid) { 
+        return accountManager.findAccountById(uid);
+    }
 
+    @RequestMapping(value = "/helloWorld")
+    public String helloWorld() {
+        user.setUserName("awesome");
+        return "helloWorld";
+    }
+}
+```
+在例子中，`addAccount()`方法会向model中添加一个名为"user"、值为返回值的属性。如果`@ModelAttribute`中没有指定属性的名称，则**属性名由返回类型确定**，即将"Account"的首字母小写，得到属性名为"account"。
 
 ## 在@RequestMapping方法上使用`@ModelAttribute`
 
@@ -53,7 +70,7 @@ public class HelloWorldController {
 
 根据被注解方法的的返回值，可分为两种情况：方法有返回值的，方法无返回值的。
 
-### 方法有返回值的情况
+### A. 方法有返回值的情况
 此时方法的返回值会添加到model中。
 ```
 @Controller
@@ -73,10 +90,9 @@ public class HelloWorldController {
     }
 }
 ```
-在例子中，`addAccount()`方法会向model中添加一个名为"user"、值为返回值的属性。如果`@ModelAttribute`中没有指定属性的名称，则**属性名由返回类型确定**，即将"Account"的首字母小写，得到属性名为"account"。
+在例子中，`addAccount()`方法会向model中添加一个名为"user"、值为返回值的属性。可以看出，将`@ModelAttribute`注解加在方法上，与加在方法返回值上效果一样。
 
-
-### 方法无返回值的情况
+### B. 方法无返回值的情况
 此时方法的入参中需要有一个`Model`（`org.springframework.ui.Model`）类型的参数，以便向model中添加属性。
 ```
 @Controller
@@ -100,7 +116,7 @@ public class HelloWorldController {
 ```
 在例子中，`addAccount()`方法向model中添加了两个属性，一个是通过传入的uid获取的Account对象，另一个是状态信息。
 
-### 参考文档
+## 参考文档
 1. [博客园 - spring学习之@ModelAttribute运用详解](https://www.cnblogs.com/javaboy2018/p/8953415.html)
 1. [CSDN - 【Spring】@ModelAttribute三种使用场景](https://blog.csdn.net/wxgxgp/article/details/81304570)
 
