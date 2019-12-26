@@ -1,7 +1,7 @@
 # Spring中`@ModelAttribute`注解的使用
 
 ## 注解的功能
-jar包spring-web下的`@ModelAttribute`（`org.springframework.web.bind.annotation.ModelAttribute`）注解，从其名字可以看出，它用于向web视图即model中添加属性，从而可以在视图中通过${}使用这些属性数据。该注解只能用在带`@Controller`或`@ControllerAdvice`注解的类中，它可以标注在**方法参数**或**方法**上。
+jar包spring-web下的`@ModelAttribute`（`org.springframework.web.bind.annotation.ModelAttribute`）注解，从其名字可以看出，它用于向web视图即model中添加属性，从而可以在视图中通过${}使用这些属性数据。该注解只能用在带`@Controller`（`org.springframework.stereotype.Controller`）或`@ControllerAdvice`（`org.springframework.web.bind.annotation.ControllerAdvice`）注解的类中，它可以标注在**方法参数**或**方法**上。`@ModelAttribute`用在带`@ControllerAdvice`注解的类中的效果，与用在带`@Controller`注解的类中相似。
 
 可用`@ModelAttribute`的参数包括方法的入口参数和返回参数，可用`@ModelAttribute`的方法包括带`@RequestMapping`注解的方法和不带`@RequestMapping`的普通方法。
 
@@ -64,7 +64,7 @@ public class HelloWorldController {
 视图名称由`RequestToViewNameTranslator`（`org.springframework.web.servlet.RequestToViewNameTranslator`）根据请求路径"/helloWorld"转换为逻辑视图名称"helloWorld"。
 
 ## 在普通方法上使用`@ModelAttribute`
-被`@ModelAttribute`注解的方法会在当前Controller带`@RequestMapping`的方法每次执行前被执行，以便向model中添加属性。
+被`@ModelAttribute`注解的方法会在当前Controller带`@RequestMapping`的方法**每次执行前被执行**，以便向model中添加属性。
 
 这些普通方法的入参可以使用`@RequestParam`，以便将HTTP请求的数据赋给该参数。
 
