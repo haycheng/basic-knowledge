@@ -1,6 +1,6 @@
-## Spring中`@ModelAttribute`注解的使用
+# Spring中`@ModelAttribute`注解的使用
 
-### 注解的功能
+## 注解的功能
 jar包spring-web下`@ModelAttribute`（`org.springframework.web.bind.annotation.ModelAttribute`）注解，用于向web视图即`Model`中添加属性，从而可以在视图中通过${}使用这些属性数据。该注解只能用在带`@Controller`或`@ControllerAdvice`注解的类中，它可以标注在方法参数或方法上。可用`@ModelAttribute`的参数包括方法的入口参数和返回参数，可用`@ModelAttribute`的方法包括带`@RequestMapping`注解的方法和不带`@RequestMapping`的普通方法。
 
 ### 在方法入口参数上使用`@ModelAttribute`
@@ -26,3 +26,9 @@ public class HelloWorldController {
 在@RequestMapping方法上使用`@ModelAttribute`
 
 在普通方法上使用`@ModelAttribute`
+
+
+### 参考文档
+1. [博客园 - spring学习之@ModelAttribute运用详解](https://www.cnblogs.com/javaboy2018/p/8953415.html)
+1. [CSDN - 【Spring】@ModelAttribute三种使用场景](https://blog.csdn.net/wxgxgp/article/details/81304570)
+
