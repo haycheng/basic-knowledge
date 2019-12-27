@@ -1,7 +1,7 @@
 ## 如何转换前端传过来的Date类型数据？—— Spring MVC 中的数据绑定（data binding）
 
 ### 如何解析 HTTP 请求中的字符串
-HTTP 请求中传递的数据都是字符串类型的，当请求到达后端，这些数据需要被转换成Controller的方法（即handler）中形参对应的数据类型，如`String`（`java.lang.String`）、`Integer`（`java.lang.Integer`）、`Date`（`java.util.Date`）等。
+HTTP 请求中传递的数据都是字符串类型的，当请求到达后端，这些数据需要被转换成Controller的方法（即handler）中形参对应的数据类型，如`String`（`java.lang.String`）、`Integer`（`java.lang.Integer`）、`Date`（`java.util.Date`）等。对于字符串格式较为统一的数据类型，Web开发框架一般都会自动将请求中的字符串转换成所需的类型。
 
 如果不借助系统提供的功能，我们可以自己对字符串数据进行处理。比如在某个handler中，需要请求方传一个`Date`类型的数据。如果系统不能自动将字符串转换成`Date`，那我们可以将这个入参定义为`String`类型，然后在方法体中对这个字符串进行解析（如用`java.text.DateFormat#format(java.util.Date)`），后面再用解析得到的`Date`实例进行业务处理。
 
