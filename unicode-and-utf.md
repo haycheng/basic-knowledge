@@ -176,4 +176,4 @@ UTF-32|`0x0000FEFF`|`xFFFE0000`
 1. [Unicode——百度百科](https://baike.baidu.com/item/Unicode/750500)
 1. [ISO/IEC 8859——百度百科](https://baike.baidu.com/item/ISO%2FIEC%208859/916777)
 1. [GB2312 编码](https://www.qqxiuzi.cn/zh/hanzi-gb2312-bianma.php)
-
+1. [字符编码笔记：ASCII，Unicode 和 UTF-8](http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html)
