@@ -18,6 +18,7 @@ URL编码仅限于指网址中字符的编码。网络标准RFC 1738规定，URL
 因为Javascript的输出总是一致的，所以就保证了服务器得到的数据是格式统一的。
 
 Javascript语言用于编码的函数共有3个：
+
 - `escape()`
 > `escape()`很古老，已不提倡使用。`escape()`不能直接用于URL编码，它只是返回一个字符的Unicode编码值。实际上，无论网页的原始编码是什么，一旦被Javascript编码，就都变为unicode字符。也就是说，Javascipt函数的输入和输出，默认都是Unicode字符。
 
@@ -30,13 +31,20 @@ Javascript语言用于编码的函数共有3个：
 > `escape()`对应的解码函数是`unescape()`。
 
 - `encodeURI()`
-> encodeURI()是JavaScript中用来对URL编码的函数。
+> `encodeURI()`是JavaScript中用来对URL编码的函数。
 
 > 它对整个URL进行编码，除了常见的符号以外，对其他一些在网址中有特殊含义的符号"; / ? : @ & = + $ , #"，也不进行编码。
 
 > 它编码后输出符号的UTF-8形式，并且在每个字节前加上%。
 
-> 它对应的解码函数是decodeURI()。
+> 它对应的解码函数是`decodeURI()`。
+
+- `encodeURIComponent()`
+> 它用于对URL的组成部分进行个别编码，而不用于对整个URL进行编码。
+
+> 因此，"; / ? : @ & = + $ , #"，这些在`encodeURI()`中不被编码的符号，在`encodeURIComponent()`中统统会被编码。
+
+> 它对应的解码函数是`decodeURIComponent()`。
 
 ### 参考文档
 1. [关于URL编码](http://www.ruanyifeng.com/blog/2010/02/url_encoding.html)
